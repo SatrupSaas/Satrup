@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: satrup
+  profiles:
+    active: dev
