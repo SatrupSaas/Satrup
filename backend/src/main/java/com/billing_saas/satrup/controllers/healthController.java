@@ -1,4 +1,4 @@
-package com.billing_saas.satrup.controller;
+package com.billing_saas.satrup.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
