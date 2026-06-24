@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TenantService {
     Tenant create(TenantRequest request);
-    Tenant getById(Long id);
+    Tenant getById(Long tenant_id);
     List<Tenant> getAll();
 }

@@ -24,9 +24,9 @@ public class TenantController {
         return ApiResponse.success("Tenant created", tenantService.create(request));
     }
 
-    @GetMapping("/{id}")
-    public ApiResponse<Tenant> getById(@PathVariable Long id) {
-        return ApiResponse.success("Tenant found", tenantService.getById(id));
+    @GetMapping("/{tenant_id}")
+    public ApiResponse<Tenant> getById(@PathVariable Long tenant_id) {
+        return ApiResponse.success("Tenant found", tenantService.getById(tenant_id));
     }
 
     @GetMapping
