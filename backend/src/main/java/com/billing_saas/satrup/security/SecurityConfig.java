@@ -2,6 +2,7 @@ package com.billing_saas.satrup.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -37,18 +38,21 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints (no authentication needed)
+
+                        // PUBLIC ONLY
                         .requestMatchers("/api/health").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/tenants").permitAll()
-                        .requestMatchers("/api/tenants/{tenant_id}").permitAll()
-                        .requestMatchers("/api/users").permitAll()
-                        .requestMatchers("/api/customers").permitAll()
-                        .requestMatchers("/api/items").permitAll()
+                        // Change this line in your SecurityConfig:
+                        .requestMatchers(HttpMethod.POST, "/api/tenants", "/api/tenants/").permitAll()
 
-                        // Protected endpoints (need authentication)
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/tenants/**").authenticated()
+                        .requestMatchers("/api/users/**").hasAnyRole("owner", "manager")
+                        .requestMatchers("/api/customers/**").hasAnyRole("owner", "manager", "cashier")
+                        .requestMatchers("/api/items/**").hasAnyRole("owner", "manager", "cashier")
+
+                        // EVERYTHING ELSE
                         .anyRequest().authenticated()
+
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception

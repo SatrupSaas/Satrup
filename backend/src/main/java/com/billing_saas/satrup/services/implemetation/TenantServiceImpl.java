@@ -35,8 +35,8 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant getById(Long tenant_id) {
-        return tenantRepository.findById(tenant_id)
+    public Tenant getById(Long tenantId) {
+        return tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new NotFoundException("Tenant not found"));
     }
 
